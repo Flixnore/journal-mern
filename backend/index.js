@@ -1,15 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
+const fs = require('fs');
+const toml = require('toml');
 
 const app = express();
 const port = process.env.PORT || 5000;
-const conn = mysql.createConnection({
-  host: "localhost",
-  user: "yeet2",
-  password: "***REMOVED***",
-  database: "journal",
-});
+
+const config = toml.parse(fs.readFileSync('./db.toml', 'utf-8'));
+const conn = mysql.createConnection(config.conn);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +26,7 @@ app.use(function (req, res, next) {
 
 app.get("/getPreviews", (req, res) => {
   const sql =
-    "SELECT entryID, title, type, date FROM entries ORDER BY date DESC, timestamp DESC LIMIT 10;";
+    "SELECT entryID, title, type, date FROM entries ORDER BY date DESC, timestamp DESC LIMIT 20;";
 
   conn.query(sql, function (err, rows) {
     if (err) throw err;
