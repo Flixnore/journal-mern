@@ -1,6 +1,5 @@
 # In this file, define your database connection as a toml dictionary
-# Example:
-# 
+# Follow this example:
 # [conn]
 # host =  "localhost"
 # user = "snap"
