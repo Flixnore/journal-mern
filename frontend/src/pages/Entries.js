@@ -5,10 +5,12 @@ import Entry from "../components/entries/Entry";
 
 function Entries() {
   const [loading, setLoading] = useState(true);
-  const [previewsData, setPreviewsData] = useState([]);
 
+  const [previewsData, setPreviewsData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+
   const [currentEntryData, setCurrentEntryData] = useState({});
+  const [entryID, setEntryID] = useState("");
 
   // Get list of all entries
   useEffect(() => {
@@ -22,11 +24,9 @@ function Entries() {
       });
   }, [loading, searchInput]);
 
-  if (loading) {
-    return <div>loading</div>;
-  }
+  useEffect(() => {
+    if (entryID === "") return
 
-  function getEntry(entryID) {
     console.log("here", entryID);
     fetch("http://localhost:5000/getEntry?entryID=" + entryID)
       .then((response) => {
@@ -35,9 +35,11 @@ function Entries() {
       .then((data) => {
         setCurrentEntryData(data);
       });
-  }
+  }, [entryID]);
 
-  console.log(currentEntryData);
+  if (loading) {
+    return <div>loading</div>;
+  }
 
   return (
     <div>
@@ -45,7 +47,7 @@ function Entries() {
       <PreviewList
         search={searchInput}
         data={previewsData}
-        getEntry={getEntry}
+        setEntry={setEntryID}
       />
       <Entry
         title={currentEntryData.title}

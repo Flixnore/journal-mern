@@ -9,8 +9,6 @@ function PreviewList(props) {
     );
   });
 
-  console.log(previews);
-
   return <div>{previews}</div>;
 }
 
