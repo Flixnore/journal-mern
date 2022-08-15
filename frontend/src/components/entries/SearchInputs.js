@@ -4,7 +4,7 @@ function SearchInputs(props) {
       <input
         type="text"
         id="search"
-        onChange={(e) => props.search(e.target.value)}
+        onChange={(e) => props.setSearch(e.target.value)}
       />
       {/* 
       <label>

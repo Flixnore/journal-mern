@@ -25,8 +25,15 @@ app.use(function (req, res, next) {
 });
 
 app.get("/getPreviews", (req, res) => {
+  let search = req.query.search;
+  if (search === undefined) search = ""
+
   const sql =
-    "SELECT entryID, title, type, date FROM entries ORDER BY date DESC, timestamp DESC LIMIT 20;";
+    `SELECT entryID, title, type, date FROM entries 
+     WHERE text like '%${search}%' or title like '%${search}%'
+     ORDER BY date DESC, timestamp DESC 
+     LIMIT 20;`;
+  console.log(sql)
 
   conn.query(sql, function (err, rows) {
     if (err) throw err;

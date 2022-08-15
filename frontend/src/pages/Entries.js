@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import PreviewList from "../components/entries/PreviewList";
 import SearchInputs from "../components/entries/SearchInputs";
+import Entry from "../components/entries/Entry";
 
 function Entries() {
   const [loading, setLoading] = useState(true);
   const [previewsData, setPreviewsData] = useState([]);
 
-  const [currentEntryData, setCurrentEntryData] = useState({})
+  const [searchInput, setSearchInput] = useState("");
+  const [currentEntryData, setCurrentEntryData] = useState({});
 
   // Get list of all entries
   useEffect(() => {
-    fetch("http://localhost:5000/getPreviews")
+    fetch("http://localhost:5000/getPreviews?search=" + searchInput)
       .then((response) => {
         return response.json();
       })
@@ -18,17 +20,16 @@ function Entries() {
         setPreviewsData(data);
         setLoading(false);
       });
-  }, [loading]);
+  }, [loading, searchInput]);
 
   if (loading) {
     return <div>loading</div>;
   }
 
-  function getEntry (entryID) {
-    console.log("here", entryID)
+  function getEntry(entryID) {
+    console.log("here", entryID);
     fetch("http://localhost:5000/getEntry?entryID=" + entryID)
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((data) => {
@@ -36,19 +37,21 @@ function Entries() {
       });
   }
 
-  console.log(currentEntryData)
+  console.log(currentEntryData);
 
   return (
     <div>
-      <SearchInputs />
-      <PreviewList data={previewsData} getEntry={getEntry} />
-      {/* TOOD: use Entry component, can't get it to rerender... */}
-      <div>
-        <div id="asdf">
-          {currentEntryData.title} | {currentEntryData.date}
-        </div>
-        <div>{currentEntryData.text}</div>
-      </div>
+      <SearchInputs setSearch={setSearchInput} />
+      <PreviewList
+        search={searchInput}
+        data={previewsData}
+        getEntry={getEntry}
+      />
+      <Entry
+        title={currentEntryData.title}
+        date={currentEntryData.date}
+        text={currentEntryData.text}
+      />
     </div>
   );
 }
