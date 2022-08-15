@@ -3,6 +3,8 @@ import PreviewList from "../components/entries/PreviewList";
 import SearchInputs from "../components/entries/SearchInputs";
 import Entry from "../components/entries/Entry";
 
+import "./Entries.css"
+
 function Entries() {
   const [loading, setLoading] = useState(true);
 
@@ -25,14 +27,17 @@ function Entries() {
   }, [loading, searchInput]);
 
   useEffect(() => {
-    if (entryID === "") return
+    if (entryID === "") return;
 
-    console.log("here", entryID);
     fetch("http://localhost:5000/getEntry?entryID=" + entryID)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
+        // Correctly render line breaks
+        data.text = data.text.replace(/\n{2}/g, "&nbsp;</p><p>");
+        data.text = data.text.replace(/\n/g, "&nbsp;<br />");
+        data.text = "<p>" + data.text + "</p>";
         setCurrentEntryData(data);
       });
   }, [entryID]);
@@ -42,18 +47,22 @@ function Entries() {
   }
 
   return (
-    <div>
-      <SearchInputs setSearch={setSearchInput} />
-      <PreviewList
-        search={searchInput}
-        data={previewsData}
-        setEntry={setEntryID}
-      />
-      <Entry
-        title={currentEntryData.title}
-        date={currentEntryData.date}
-        text={currentEntryData.text}
-      />
+    <div className="container">
+      <div className="item">
+        <SearchInputs setSearch={setSearchInput} />
+        <PreviewList
+          search={searchInput}
+          data={previewsData}
+          setEntry={setEntryID}
+        />
+      </div>
+      <div className="item">
+        <Entry
+          title={currentEntryData.title}
+          date={currentEntryData.date}
+          text={currentEntryData.text}
+        />
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ function Entry(props) {
       <div>
         {props.title} | {props.date}
       </div>
-      <div>{props.text}</div>
+      <div dangerouslySetInnerHTML={{ __html: props.text }}></div>
     </div>
   );
 }
