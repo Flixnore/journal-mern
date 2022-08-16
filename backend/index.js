@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
-const fs = require('fs');
-const toml = require('toml');
+const fs = require("fs");
+const toml = require("toml");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-const config = toml.parse(fs.readFileSync('./db.toml', 'utf-8'));
+const config = toml.parse(fs.readFileSync("./db.toml", "utf-8"));
 const conn = mysql.createConnection(config.conn);
 
 app.use(bodyParser.json());
@@ -24,16 +24,18 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/getPreviews", (req, res) => {
-  let search = req.query.search;
-  if (search === undefined) search = ""
+app.get("/getEntries", (req, res) => {
+  let words = req.query.words;
+  let type = req.query.type;
+  let entryID = req.query.entryID;
 
-  const sql =
-    `SELECT entryID, title, type, date FROM entries 
-     WHERE text like '%${search}%' or title like '%${search}%'
-     ORDER BY date DESC, timestamp DESC 
-     LIMIT 20;`;
-  console.log(sql)
+  let sql = `
+  SELECT entryID, title, type, date, text FROM entries 
+    ${words ? `WHERE text like '%${words}%' or title like '%${words}%'` : ""}
+    ${type ? `WHERE type like '%${words}%' ` : ""}
+    ${entryID ? `WHERE entryID = ${entryID} ` : ""} 
+  ORDER BY date DESC, timestamp DESC;`;
+  console.log(sql);
 
   conn.query(sql, function (err, rows) {
     if (err) throw err;
@@ -44,24 +46,10 @@ app.get("/getPreviews", (req, res) => {
         title: rows[i].title,
         type: rows[i].type,
         date: rows[i].date,
+        text: rows[i].text,
       });
     }
     res.json(objs);
-  });
-});
-
-app.get("/getEntry", (req, res) => {
-  const entryID = req.query.entryID;
-  const sql = `SELECT * FROM entries WHERE entryID = ${entryID};`;
-
-  conn.query(sql, function (err, [entry]) {
-    if (err) throw err;
-    // TODO, entry can be undefined here
-    res.json({
-      title: entry.title,
-      date: entry.date,
-      text: entry.text,
-    });
   });
 });
 

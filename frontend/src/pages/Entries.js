@@ -3,7 +3,7 @@ import PreviewList from "../components/entries/PreviewList";
 import SearchInputs from "../components/entries/SearchInputs";
 import Entry from "../components/entries/Entry";
 
-import "./Entries.css"
+import "./Entries.css";
 
 function Entries() {
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ function Entries() {
 
   // Get list of all entries
   useEffect(() => {
-    fetch("http://localhost:5000/getPreviews?search=" + searchInput)
+    fetch("http://localhost:5000/getEntries?words=" + searchInput)
       .then((response) => {
         return response.json();
       })
@@ -29,11 +29,12 @@ function Entries() {
   useEffect(() => {
     if (entryID === "") return;
 
-    fetch("http://localhost:5000/getEntry?entryID=" + entryID)
+    fetch("http://localhost:5000/getEntries?entryID=" + entryID)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
+        data = data[0]; // using entryID deterministically yields one result
         // Correctly render line breaks
         data.text = data.text.replace(/\n{2}/g, "&nbsp;</p><p>");
         data.text = data.text.replace(/\n/g, "&nbsp;<br />");
