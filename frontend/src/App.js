@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./components/journal/Inputs";
-import NavBar from "./components/NavBar";
+import NavBar from "./pages/NavBar";
 import Journal from "./pages/Journal";
 import Entries from "./pages/Entries";
 
