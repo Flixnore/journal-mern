@@ -2,6 +2,11 @@
   display: flex;
 }
 
-.item {
+.item1 {
   margin: 10px;
+}
+
+.item2 {
+  margin: 10px;
+  flex: 2 1;
 }

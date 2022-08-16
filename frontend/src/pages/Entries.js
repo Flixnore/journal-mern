@@ -48,7 +48,7 @@ function Entries() {
 
   return (
     <div className="container">
-      <div className="item">
+      <div className="item1">
         <SearchInputs setSearch={setSearchInput} />
         <PreviewList
           search={searchInput}
@@ -56,7 +56,7 @@ function Entries() {
           setEntry={setEntryID}
         />
       </div>
-      <div className="item">
+      <div className="item2">
         <Entry
           title={currentEntryData.title}
           date={currentEntryData.date}
