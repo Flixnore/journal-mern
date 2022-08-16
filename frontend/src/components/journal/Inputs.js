@@ -13,11 +13,13 @@ function Inputs(props) {
     }
   }
 
+  let today = new Date().toISOString().split('T')[0]
+
   return (
     <div>
       <div>
         <label htmlFor="date">Date: </label>
-        <input type="date" id="date" onChange={(e) => {setDate(e.target.value)}} />
+        <input type="date" id="date" defaultValue={today} onChange={(e) => {setDate(e.target.value)}} />
       </div>
       <div>
         <label htmlFor="type">Type: </label>
