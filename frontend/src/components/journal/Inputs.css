@@ -1,0 +1,8 @@
+label {
+  font-weight: bold;
+  color: rgb(219, 219, 219);
+}
+
+textarea, input {
+  background-color: #aaaaaa;
+}
