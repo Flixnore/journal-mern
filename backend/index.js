@@ -56,21 +56,19 @@ app.get("/getEntries", (req, res) => {
 app.post("/journalPost", (req, res) => {
   console.log(req.body);
   const date = req.body.date;
-  const type = req.body.type;
-  const title = req.body.title;
-  const text = req.body.text;
+  const type = req.body.type.replace(/(["'])/g, "\\$1");
+  const title = req.body.title.replace(/(["'])/g, "\\$1");
+  const text = req.body.text.replace(/(["'])/g, "\\$1");
+  const lat = req.body.lat;
+  const long = req.body.long;
 
-  const sql = `INSERT INTO entries (title, text, date, dayOfWeek,  type) 
-            VALUES ('${title}', '${text}', '${date}', DAYOFWEEK('${date}'), '${type}') 
+  const sql = `INSERT INTO entries (title, text, date, dayOfWeek,  type, location) 
+            VALUES ('${title}', "${text}", '${date}', DAYOFWEEK('${date}'), '${type}', POINT(${lat}, ${long})) 
             ON DUPLICATE KEY UPDATE text = '${text}';`;
 
   conn.query(sql, function (err, result) {
-    if (err) {
-      throw err;
-    } else {
-      // Throw a success message here.
-      res.send("yeeted");
-    }
+    if (err) throw err;
+    res.send("yeeted");
   });
 });
 
