@@ -2,6 +2,7 @@ function SearchInputs(props) {
   return (
     <div style={{ textAlign: "center" }}>
       <input
+        style={{ width: "50%", fontSize: "1.3em" }}
         type="text"
         id="search"
         onChange={(e) => props.setSearch(e.target.value)}

@@ -25,32 +25,54 @@ app.use(function (req, res, next) {
 });
 
 app.get("/getEntries", (req, res) => {
-  let words = req.query.words;
   let type = req.query.type;
+  let title = req.query.title;
+  let words = req.query.words;
   let entryID = req.query.entryID;
+  let limit = req.query.limit;
+  let where = "";
+
+  // build where clause
+  if (type || title || words || entryID) {
+    where += "WHERE ";
+    where += type ? `type LIKE '%${type}%' AND ` : "";
+    where += title ? `title LIKE '%${title}%' AND ` : "";
+    where += words ? `text LIKE '%${words}%' AND ` : "";
+    where += entryID ? `entryID = ${entryID} AND ` : "";
+    where = where.slice(0, -4);
+  }
+
 
   let sql = `
   SELECT entryID, title, type, date, text FROM entries 
-    ${words ? `WHERE text like '%${words}%' or title like '%${words}%'` : ""}
-    ${type ? `WHERE type like '%${words}%' ` : ""}
-    ${entryID ? `WHERE entryID = ${entryID} ` : ""} 
+    ${where}
   ORDER BY date DESC, timestamp DESC
-  LIMIT 15;`;
+  LIMIT ${
+    limit
+    ? limit
+    : limit === "" 
+      ? "18446744073709551615"
+      : "15" 
+  };`;
   console.log(sql);
 
   conn.query(sql, function (err, rows) {
-    if (err) throw err;
-    let objs = [];
-    for (var i = 0; i < rows.length; i++) {
-      objs.push({
-        entryID: rows[i].entryID,
-        title: rows[i].title,
-        type: rows[i].type,
-        date: rows[i].date,
-        text: rows[i].text,
-      });
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else {
+      let objs = [];
+      for (var i = 0; i < rows.length; i++) {
+        objs.push({
+          entryID: rows[i].entryID,
+          title: rows[i].title,
+          type: rows[i].type,
+          date: rows[i].date,
+          text: rows[i].text,
+        });
+      }
+      res.json(objs);
     }
-    res.json(objs);
   });
 });
 
