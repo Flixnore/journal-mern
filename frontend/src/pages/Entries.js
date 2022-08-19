@@ -51,6 +51,7 @@ function Entries() {
     <div className="container">
       <div className="item1">
         <SearchInputs setSearch={setSearchInput} />
+        <br />
         <PreviewList
           search={searchInput}
           data={previewsData}

@@ -1,6 +1,6 @@
 function SearchInputs(props) {
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <input
         type="text"
         id="search"

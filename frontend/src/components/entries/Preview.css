@@ -1,0 +1,10 @@
+.preview {
+  font-weight: bold;
+  color:white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.preview:hover {
+  border: 4px solid black;
+}
