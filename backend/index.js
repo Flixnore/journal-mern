@@ -25,16 +25,27 @@ app.use(function (req, res, next) {
 });
 
 app.get("/getEntries", (req, res) => {
-  let words = req.query.words;
   let type = req.query.type;
+  let title = req.query.title;
+  let words = req.query.words;
   let entryID = req.query.entryID;
   let limit = req.query.limit;
+  let where = "";
+
+  // build where clause
+  if (type || title || words || entryID) {
+    where += "WHERE ";
+    where += type ? `type LIKE '%${type}%' AND ` : "";
+    where += title ? `title LIKE '%${title}%' AND ` : "";
+    where += words ? `text LIKE '%${words}%' AND ` : "";
+    where += entryID ? `entryID = ${entryID} AND ` : "";
+    where = where.slice(0, -4);
+  }
+
 
   let sql = `
   SELECT entryID, title, type, date, text FROM entries 
-    ${words ? `WHERE text like '%${words}%' or title like '%${words}%'` : ""}
-    ${type ? `WHERE type like '%${type}%' ` : ""}
-    ${entryID ? `WHERE entryID = ${entryID} ` : ""} 
+    ${where}
   ORDER BY date DESC, timestamp DESC
   LIMIT ${
     limit
