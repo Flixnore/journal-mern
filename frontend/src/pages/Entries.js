@@ -41,9 +41,10 @@ function Entries() {
       })
       .then((data) => {
         data = data[0]; // using entryID deterministically yields one result
+        console.log(data)
         // Correctly render line breaks
-        data.text = data.text.replace(/\n{2}/g, "&nbsp;</p><p>");
-        data.text = data.text.replace(/\n/g, "&nbsp;<br />");
+        data.text = data.text.replace(/\n{2}|\r{2}/g, "&nbsp;</p><p>");
+        data.text = data.text.replace(/\n|\r/g, "&nbsp;<br />");
         data.text = "<p>" + data.text + "</p>";
         setCurrentEntryData(data);
       });
