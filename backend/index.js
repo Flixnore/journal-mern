@@ -32,28 +32,28 @@ app.get("/getEntries", (req, res) => {
   let limit = req.query.limit;
   let where = "";
 
+  function build_cond(bite, column) {
+    if (!bite) return "";
+    return bite.charAt(0) === "!"
+      ? `${column} NOT LIKE '%${bite.substring(1)}%' AND `
+      : `${column} LIKE '%${bite}%' AND `;
+  }
+
   // build where clause
   if (type || title || words || entryID) {
     where += "WHERE ";
-    where += type ? `type LIKE '%${type}%' AND ` : "";
-    where += title ? `title LIKE '%${title}%' AND ` : "";
-    where += words ? `text LIKE '%${words}%' AND ` : "";
-    where += entryID ? `entryID = ${entryID} AND ` : "";
+    where += build_cond(type, "type");
+    where += build_cond(title, "title");
+    where += build_cond(words, "text");
+    where += build_cond(entryID, "entryID");
     where = where.slice(0, -4);
   }
-
 
   let sql = `
   SELECT entryID, title, type, date, text FROM entries 
     ${where}
   ORDER BY date DESC, timestamp DESC
-  LIMIT ${
-    limit
-    ? limit
-    : limit === "" 
-      ? "18446744073709551615"
-      : "15" 
-  };`;
+  LIMIT ${limit ? limit : limit === "" ? "18446744073709551615" : "15"};`;
   console.log(sql);
 
   conn.query(sql, function (err, rows) {

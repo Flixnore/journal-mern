@@ -3,6 +3,7 @@ import "./Entry.css"
 function Entry(props) {
   function date_to_string (date) {
     let d = new Date(date)
+    // TODO pad with 0s
     return (d.getMonth()+1) + "-" + d.getDate()  + "-" + d.getFullYear()
   }
 
