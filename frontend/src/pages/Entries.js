@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import PreviewList from "../components/entries/PreviewList";
 import SearchInputs from "../components/entries/SearchInputs";
 import Entry from "../components/entries/Entry";
+import { create_bites_string } from "../util";
 
 import "./Entries.css";
 
@@ -16,9 +17,14 @@ function Entries() {
 
   // Get list of all entries
   useEffect(() => {
-    fetch("http://localhost:5000/getEntries?words=" + searchInput)
+    let bites_string = create_bites_string(searchInput);
+    fetch("http://localhost:5000/getEntries" + bites_string)
       .then((response) => {
-        return response.json();
+        if (response.ok) {
+          return response.json();
+        } else {
+          return Promise.reject(response);
+        }
       })
       .then((data) => {
         setPreviewsData(data);
