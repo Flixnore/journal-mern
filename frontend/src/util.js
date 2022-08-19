@@ -15,12 +15,10 @@ export function create_bites_string(str) {
       }
     }
   }
-  console.log(bites);
   // reduce the bites array to a string of the form "key1=value1&key2=value2"
   let bites_string = Object.keys(bites).reduce((acc, key) => {
     return acc + `${key}=${bites[key]}&`;
   }, "?");
-  console.log(bites_string);
 
   return bites_string;
 }

@@ -29,6 +29,7 @@ app.get("/getEntries", (req, res) => {
   let title = req.query.title;
   let words = req.query.words;
   let entryID = req.query.entryID;
+  let date = req.query.date;
   let limit = req.query.limit;
   let where = "";
 
@@ -40,19 +41,21 @@ app.get("/getEntries", (req, res) => {
   }
 
   // build where clause
-  if (type || title || words || entryID) {
+  if (type || title || words || entryID || date) {
     where += "WHERE ";
     where += build_cond(type, "type");
     where += build_cond(title, "title");
     where += build_cond(words, "text");
     where += build_cond(entryID, "entryID");
+    where += build_cond(date, "CAST(date AS char)")
+
     where = where.slice(0, -4);
   }
 
   let sql = `
-  SELECT entryID, title, type, date, text FROM entries 
+  SELECT entryID, title, type, DATE_FORMAT(date, '%m-%d-%Y') AS date, date as original_date, text FROM entries 
     ${where}
-  ORDER BY date DESC, timestamp DESC
+  ORDER BY original_date DESC, timestamp DESC
   LIMIT ${limit ? limit : limit === "" ? "18446744073709551615" : "15"};`;
   console.log(sql);
 
