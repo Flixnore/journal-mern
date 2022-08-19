@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import PreviewList from "../components/entries/PreviewList";
-import SearchInputs from "../components/entries/SearchInputs";
+import PreviewList from "../components/entries/preview/PreviewList";
+import SearchInputs from "../components/entries/preview/SearchInputs";
 import Entry from "../components/entries/Entry";
 
 import "./Entries.css";
