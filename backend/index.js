@@ -34,7 +34,8 @@ app.get("/getEntries", (req, res) => {
     ${words ? `WHERE text like '%${words}%' or title like '%${words}%'` : ""}
     ${type ? `WHERE type like '%${words}%' ` : ""}
     ${entryID ? `WHERE entryID = ${entryID} ` : ""} 
-  ORDER BY date DESC, timestamp DESC;`;
+  ORDER BY date DESC, timestamp DESC
+  LIMIT 15;`;
   console.log(sql);
 
   conn.query(sql, function (err, rows) {
