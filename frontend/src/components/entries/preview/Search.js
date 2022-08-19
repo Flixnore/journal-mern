@@ -1,7 +1,8 @@
-function SearchInputs(props) {
+function Search(props) {
   return (
     <div style={{ textAlign: "center" }}>
       <input
+      style={{ fontSize: "15pt", width: "50%"}}
         type="text"
         id="search"
         onChange={(e) => props.setSearch(e.target.value)}
@@ -24,4 +25,4 @@ function SearchInputs(props) {
   );
 }
 
-export default SearchInputs;
+export default Search;

@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getEntryData } from "../entries/getEntryData";
 
 import "./Inputs.css";
 
 function Inputs(props) {
   let today = new Date().toISOString().split("T")[0];
-
   const [date, setDate] = useState(today);
   const [type, setType] = useState("test");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (props.entryID === "") return;
+    console.log("Getting in inputs", props.entryID);
+    getEntryData(props.entryID, false).then(function (data) {
+      console.log(data);
+      setDate(new Date(data.date).toISOString().split("T")[0]);
+      setType(data.type);
+      setTitle(data.title);
+      setText(data.text);
+    });
+  }, [props.entryID]);
 
   function handleTextChange(e) {
     setText(e.target.value);
@@ -25,7 +37,7 @@ function Inputs(props) {
 
   async function onSubmit(date, type, title, text, e) {
     if (e) {
-      e.preventDefault()
+      e.preventDefault();
     }
     console.log("yeety");
     console.log(date, type, title, text);
@@ -65,7 +77,7 @@ function Inputs(props) {
           <input
             type="date"
             id="date"
-            defaultValue={today}
+            value={date}
             onChange={(e) => {
               setDate(e.target.value);
             }}
@@ -89,6 +101,7 @@ function Inputs(props) {
           <input
             type="text"
             id="title"
+            value={title}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -100,6 +113,7 @@ function Inputs(props) {
             rows="40"
             cols="130"
             id="text"
+            value={text}
             onChange={(e) => handleTextChange(e)}
           />
         </div>
