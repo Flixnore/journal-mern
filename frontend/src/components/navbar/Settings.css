@@ -1,0 +1,15 @@
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block !important;
+}
+
+#settingsButton {
+  font-family: 'Courier New', Courier, monospace;
+  float: right;
+}
+
+#panel {
+}
