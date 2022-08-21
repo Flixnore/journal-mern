@@ -22,3 +22,10 @@ export function create_bites_string(str) {
 
   return bites_string;
 }
+
+export function getSettings () {
+  return fetch("http://localhost:5000/getSettings")
+    .then((response) => {
+      return response.json();
+    })
+}
