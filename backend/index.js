@@ -24,6 +24,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get("/getSettings", (req, res) => res.json(config.conn));
+
 app.get("/getEntries", (req, res) => {
   let type = req.query.type;
   let title = req.query.title;
@@ -47,7 +49,7 @@ app.get("/getEntries", (req, res) => {
     where += build_cond(title, "title");
     where += build_cond(words, "text");
     where += build_cond(entryID, "entryID");
-    where += build_cond(date, "CAST(date AS char)")
+    where += build_cond(date, "CAST(date AS char)");
 
     where = where.slice(0, -4);
   }
