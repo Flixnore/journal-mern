@@ -32,7 +32,7 @@ function ConnectionInputs() {
         host: host,
         user: user,
         password: password,
-        database: db
+        database: db,
       }),
     })
       .then((response) => {
@@ -54,6 +54,7 @@ function ConnectionInputs() {
         defaultValue={host}
         onChange={(e) => setHost(e.target.value)}
       />
+      <br />
       <label htmlFor="userInput">User</label>
       <br />
       <input
@@ -62,6 +63,7 @@ function ConnectionInputs() {
         defaultValue={user}
         onChange={(e) => setUser(e.target.value)}
       />
+      <br />
       <label htmlFor="passwordInput">Password</label>
       <br />
       <input
@@ -70,6 +72,7 @@ function ConnectionInputs() {
         defaultValue={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      <br />
       <label htmlFor="databaseInput">Database</label>
       <br />
       <input
