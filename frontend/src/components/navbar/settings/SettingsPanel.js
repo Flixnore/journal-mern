@@ -1,9 +1,6 @@
 import ThemeInputs from "./ThemeInputs";
 import ConnectionInputs from "./ConnectionInputs";
-<<<<<<< HEAD
 import DefaultEntryTypeInputs from "./DefaultEntryTypeInputs";
-=======
->>>>>>> master
 import "./SettingsPanel.css";
 
 function SettingsPanel() {
@@ -12,11 +9,8 @@ function SettingsPanel() {
       <ThemeInputs />
       <br />
       <ConnectionInputs />
-<<<<<<< HEAD
       <br />
       <DefaultEntryTypeInputs />
-=======
->>>>>>> master
     </div>
   );
 }
