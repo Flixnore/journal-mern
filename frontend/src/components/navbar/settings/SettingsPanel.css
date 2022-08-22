@@ -4,18 +4,10 @@
   padding: 10px;
 }
 
-.connectionInputs > label {
+.connectionInputs > label, .themeInputs > label, .defaultEntryTypeInputs > label {
   color: black;
 }
 
-.connectionInputs > input {
-  background-color: white;
-}
-
-.themeInputs > label {
-  color: black;
-}
-
-.themeInputs > input {
+.connectionInputs > input, .themeInputs > input, .defaultEntryTypeInputs > input {
   background-color: white;
 }

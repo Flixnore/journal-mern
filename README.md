@@ -4,7 +4,13 @@ Hello, thanks for stopping by. This is the journal application that I use daily 
 
 ## Building and Using
 
-UNDER CONSTRUCTION
+```
+git clone git@github.com:Flixnore/journal-mern.git
+cd journal-mern/build
+./setup.sh
+sudo mysql -u root < db.sql
+sudo mysql -u root < users.sql
+```
 
 ## FAQs
 

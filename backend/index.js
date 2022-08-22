@@ -50,6 +50,12 @@ app.post("/setTheme", (req, res) => {
   res.send("yeeted");
 });
 
+app.post("/setDefaultEntryType", (req, res) => {
+  config.defaultEntryType = req.body.defaultEntryType;
+  util.writeJSON("config.json", config);
+  res.send("yeeted");
+})
+
 app.get("/getEntries", (req, res) => {
   let type = req.query.type;
   let title = req.query.title;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getSettings } from "../../util";
 
 import "./Inputs.css";
 
@@ -6,9 +7,11 @@ function Inputs(props) {
   let today = new Date().toISOString().split("T")[0];
 
   const [date, setDate] = useState(today);
-  const [type, setType] = useState("test");
+  const [type, setType] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+
+  getSettings().then((data) => setType(data.defaultEntryType));
 
   function handleTextChange(e) {
     setText(e.target.value);
@@ -24,10 +27,9 @@ function Inputs(props) {
   }
 
   async function onSubmit(date, type, title, text, e) {
-    if (e) {
-      e.preventDefault()
-    }
-    console.log("yeety");
+    if (e) e.preventDefault();
+
+    console.log("yeeting");
     console.log(date, type, title, text);
     let position = await getPosition(); // wait for getPosition to complete
     let lat = position ? position.coords.latitude : null;
