@@ -11,9 +11,7 @@ function Inputs(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  getSettings().then((data) => {
-    setType(data.defaultEntryType);
-  });
+  getSettings().then((data) => setType(data.defaultEntryType));
 
   function handleTextChange(e) {
     setText(e.target.value);
