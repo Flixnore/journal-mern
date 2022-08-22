@@ -47,7 +47,7 @@ app.post("/setConn", (req, res) => {
 app.post("/setTheme", (req, res) => {
   config.theme = req.body.theme;
   util.writeJSON("config.json", config);
-  res.send(theme);
+  res.send("yeeted");
 });
 
 app.get("/getEntries", (req, res) => {
