@@ -1,14 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
-const fs = require("fs");
-const toml = require("toml");
+const util = require("./util");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-const config = toml.parse(fs.readFileSync("./db.toml", "utf-8"));
-const conn = mysql.createConnection(config.conn);
+let config = util.readJSON("config.json");
+let conn = mysql.createConnection(config.conn);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +21,33 @@ app.use(function (req, res, next) {
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
+});
+
+app.get("/getSettings", (req, res) => res.json(config));
+
+app.post("/setConn", (req, res) => {
+  let tempConn = {
+    host: req.body.host,
+    user: req.body.user,
+    password: req.body.password,
+    database: req.body.database,
+  };
+  conn = mysql.createConnection(tempConn);
+  conn.query("SELECT USER() AS user;", function (err, rows) {
+    if (err) {
+      res.send(err);
+    } else {
+      config.conn = tempConn
+      util.writeJSON("config.json", config);
+      res.send(rows[0].user);
+    }
+  });
+});
+
+app.post("/setTheme", (req, res) => {
+  config.theme = req.body.theme;
+  util.writeJSON("config.json", config);
+  res.send("yeeted");
 });
 
 app.get("/getEntries", (req, res) => {
@@ -47,7 +73,7 @@ app.get("/getEntries", (req, res) => {
     where += build_cond(title, "title");
     where += build_cond(words, "text");
     where += build_cond(entryID, "entryID");
-    where += build_cond(date, "CAST(date AS char)")
+    where += build_cond(date, "CAST(date AS char)");
 
     where = where.slice(0, -4);
   }

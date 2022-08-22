@@ -1,0 +1,21 @@
+.panel {
+  border: 4px solid black;
+  background-color: var(--input-color);
+  padding: 10px;
+}
+
+.connectionInputs > label {
+  color: black;
+}
+
+.connectionInputs > input {
+  background-color: white;
+}
+
+.themeInputs > label {
+  color: black;
+}
+
+.themeInputs > input {
+  background-color: white;
+}

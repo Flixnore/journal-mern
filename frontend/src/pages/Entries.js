@@ -18,7 +18,7 @@ function Entries() {
   // Get list of all entries
   useEffect(() => {
     let bites_string = create_bites_string(searchInput);
-    fetch("http://localhost:5000/getEntries" + bites_string)
+    fetch("/getEntries" + bites_string)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -35,7 +35,7 @@ function Entries() {
   useEffect(() => {
     if (entryID === "") return;
 
-    fetch("http://localhost:5000/getEntries?entryID=" + entryID)
+    fetch("/getEntries?entryID=" + entryID)
       .then((response) => {
         return response.json();
       })

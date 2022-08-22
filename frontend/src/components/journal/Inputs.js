@@ -33,7 +33,7 @@ function Inputs(props) {
     let lat = position ? position.coords.latitude : null;
     let long = position ? position.coords.longitude : null;
 
-    fetch("http://localhost:5000/journalPost", {
+    fetch("/journalPost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

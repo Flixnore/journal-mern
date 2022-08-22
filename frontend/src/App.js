@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { applyTheme, getSettings } from "./util";
 
-import "./components/journal/Inputs";
 import NavBar from "./pages/NavBar";
 import Journal from "./pages/Journal";
 import Entries from "./pages/Entries";
 
 function App() {
+  getSettings().then((data) => applyTheme(data.theme))
   return (
     <BrowserRouter>
       <Routes>

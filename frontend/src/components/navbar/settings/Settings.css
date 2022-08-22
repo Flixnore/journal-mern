@@ -1,0 +1,13 @@
+.hide {
+  display: none;
+}
+
+.show {
+  display: block !important;
+}
+
+.panel {
+  position: absolute;
+  z-index: 1;
+  right: 10px;
+}
