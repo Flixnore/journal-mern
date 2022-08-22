@@ -4,6 +4,7 @@ import { getSettings } from "../../../util";
 function ThemeInputs() {
   const [loading, setLoading] = useState(true);
   const [defaultEntryType, setDefaultEntryType] = useState("");
+
   useEffect(() => {
     getSettings().then((data) => {
       setDefaultEntryType(data.defaultEntryType);
