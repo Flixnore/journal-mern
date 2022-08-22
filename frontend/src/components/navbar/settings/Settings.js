@@ -3,7 +3,7 @@ import SettingsPanel from "./SettingsPanel";
 
 import "./Settings.css";
 
-function useTogglePanelBlur(ref, closePanel) {
+function usePanelBlur(ref, closePanel) {
   useEffect(() => {
     // Close settings panel when clicked outside of it
     function handleClickOutside(event) {
@@ -22,18 +22,18 @@ function Settings() {
   const panelRef = useRef(null);
   const buttonRef = useRef(null);
   function togglePanel() {
-    if (panelRef) {
+    if (panelRef && buttonRef) {
       panelRef.current.classList.toggle("show");
       buttonRef.current.classList.toggle("hide")
     }
   }
   function closePanel() {
-    if (panelRef) {
+    if (panelRef && buttonRef) {
       panelRef.current.classList.remove("show");
       buttonRef.current.classList.remove("hide")
     }
   }
-  useTogglePanelBlur(panelRef, closePanel);
+  usePanelBlur(panelRef, closePanel);
 
   return (
     <div>
