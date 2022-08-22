@@ -6,12 +6,7 @@
   display: block !important;
 }
 
-#settingsButton {
-  font-family: 'Courier New', Courier, monospace;
-  float: right;
-}
-
-#panel {
+.panel {
   position: absolute;
   z-index: 1;
   right: 10px;

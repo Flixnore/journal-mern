@@ -40,7 +40,7 @@ function Settings() {
       <button ref={buttonRef} onClick={togglePanel}>
         Settings
       </button>
-      <div id="panel" className="hide panel" ref={panelRef}>
+      <div className="hide panel" ref={panelRef}>
         <SettingsPanel />
       </div>
     </div>
