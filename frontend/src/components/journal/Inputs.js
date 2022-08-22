@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getSettings } from "../../util";
 
 import "./Inputs.css";
 
@@ -9,6 +10,10 @@ function Inputs(props) {
   const [type, setType] = useState("test");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+
+  getSettings().then((data) => {
+    setType(data.defaultEntryType);
+  });
 
   function handleTextChange(e) {
     setText(e.target.value);
@@ -25,7 +30,7 @@ function Inputs(props) {
 
   async function onSubmit(date, type, title, text, e) {
     if (e) {
-      e.preventDefault()
+      e.preventDefault();
     }
     console.log("yeety");
     console.log(date, type, title, text);
