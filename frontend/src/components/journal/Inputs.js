@@ -7,7 +7,7 @@ function Inputs(props) {
   let today = new Date().toISOString().split("T")[0];
 
   const [date, setDate] = useState(today);
-  const [type, setType] = useState("test");
+  const [type, setType] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
