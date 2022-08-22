@@ -3,7 +3,7 @@ function ThemeInputs() {
 
   function changeTheme(theme) {
     console.log(theme);
-    fetch("http://localhost:5000/setTheme", {
+    fetch("/setTheme", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

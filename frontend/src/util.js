@@ -24,7 +24,7 @@ export function create_bites_string(str) {
 }
 
 export function getSettings () {
-  return fetch("http://localhost:5000/getSettings")
+  return fetch("/getSettings")
     .then((response) => {
       return response.json();
     })

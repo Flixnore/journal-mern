@@ -25,7 +25,7 @@ function ConnectionInputs() {
   }, [loading]);
 
   function changeConn() {
-    fetch("http://localhost:5000/setConn", {
+    fetch("/setConn", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
