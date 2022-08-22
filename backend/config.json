@@ -1,0 +1,9 @@
+{
+  "theme": "dark",
+  "conn": {
+    "host": "localhost",
+    "user": "yeet2",
+    "password": "purplemouse37",
+    "db": "journal"
+  }
+}
