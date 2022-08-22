@@ -1,8 +1,0 @@
-# In this file, define your database connection as a toml dictionary
-# These are the connection parameters as created by build/setup.sh
-
-[conn]
-host =  "localhost"
-user = "yeet2"
-password = "purplemouse37"
-database = "journal"

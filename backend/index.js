@@ -1,14 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
-const fs = require("fs");
-const toml = require("toml");
+const util = require("./util");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-const config = toml.parse(fs.readFileSync("./db.toml", "utf-8"));
-const conn = mysql.createConnection(config.conn);
+let config = util.readJSON("config.json");
+let conn = mysql.createConnection(config.conn);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,7 +23,32 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/getSettings", (req, res) => res.json(config.conn));
+app.get("/getSettings", (req, res) => res.json(config));
+
+app.post("/setConn", (req, res) => {
+  let tempConn = {
+    host: req.body.host,
+    user: req.body.user,
+    password: req.body.password,
+    database: req.body.database,
+  };
+  conn = mysql.createConnection(tempConn);
+  conn.query("SELECT USER() AS user;", function (err, rows) {
+    if (err) {
+      res.send(err);
+    } else {
+      config.conn = tempConn
+      util.writeJSON("config.json", config);
+      res.send(rows[0].user);
+    }
+  });
+});
+
+app.post("/setTheme", (req, res) => {
+  config.theme = req.body.theme;
+  util.writeJSON("config.json", config);
+  res.send(theme);
+});
 
 app.get("/getEntries", (req, res) => {
   let type = req.query.type;

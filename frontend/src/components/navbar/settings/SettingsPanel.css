@@ -6,10 +6,18 @@
   padding: 10px;
 }
 
-label {
+.connectionInputs > label {
   color: black;
 }
 
-input {
+.connectionInputs > input {
+  background-color: white;
+}
+
+.themeInputs > label {
+  color: black;
+}
+
+.themeInputs > input {
   background-color: white;
 }

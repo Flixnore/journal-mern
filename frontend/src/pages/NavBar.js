@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Settings from "../components/navbar/Settings";
+import Settings from "../components/navbar/settings/Settings";
 
 import "./NavBar.css";
 
