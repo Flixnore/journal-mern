@@ -1,10 +1,10 @@
 import ThemeInputs from "./ThemeInputs";
-import "./SettingsPanel.css";
 import ConnectionInputs from "./ConnectionInputs";
+import "./SettingsPanel.css";
 
 function SettingsPanel() {
   return (
-    <div className="panel">
+    <div>
       <ThemeInputs />
       <br />
       <ConnectionInputs />

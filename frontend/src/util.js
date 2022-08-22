@@ -23,9 +23,28 @@ export function create_bites_string(str) {
   return bites_string;
 }
 
-export function getSettings () {
-  return fetch("/getSettings")
-    .then((response) => {
-      return response.json();
-    })
+export function getSettings() {
+  return fetch("/getSettings").then((response) => {
+    return response.json();
+  });
+}
+
+export function applyTheme(theme) {
+  console.log("applying theme", theme);
+  let root = document.documentElement;
+  switch (theme) {
+    case "light":
+      root.style.setProperty("--background-color", "#dddddd");
+      root.style.setProperty("--input-color", "white");
+      root.style.setProperty("--text-color", "black");
+      return;
+    case "dark":
+      root.style.setProperty("--background-color", "#505050");
+      root.style.setProperty("--input-color", "#cccccc");
+      root.style.setProperty("--text-color", "white");
+      return;
+    default:
+      console.log("Unknown theme: " + theme);
+      return;
+  }
 }

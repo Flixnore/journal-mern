@@ -3,4 +3,5 @@
   position: sticky;
   top: 10px;
   overflow-y: auto;
+  color: var(--text-color);
 }

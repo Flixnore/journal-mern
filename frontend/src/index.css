@@ -1,5 +1,11 @@
+:root {
+  --background-color: #dddddd;
+  --input-color: white;
+  --text-color: black;
+}
+
 body {
-  background-color: #707070;
+  background-color: var(--background-color);
 }
 
 code {

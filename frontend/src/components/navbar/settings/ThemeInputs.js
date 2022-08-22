@@ -1,8 +1,16 @@
-function ThemeInputs() {
-  const theme = "dark";
+import { useEffect, useState } from "react";
+import { applyTheme, getSettings } from "../../../util";
 
-  function changeTheme(theme) {
-    console.log(theme);
+function ThemeInputs() {
+  const [theme, setTheme] = useState("");
+  useEffect(() => {
+    getSettings().then((data) => setTheme(data.theme));
+  }, [theme]);
+  let darkTrue = theme === "dark";
+  console.log(darkTrue)
+
+  function changeTheme(checked) {
+    let theme = checked ? "dark" : "light";
     fetch("/setTheme", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -15,26 +23,21 @@ function ThemeInputs() {
       })
       .then((text) => {
         // TODO: error checking
-        console.log(text, "set as theme");
+        if (text !== "yeeted") {
+          console.log("Couldn't change theme", text);
+        } else {
+          applyTheme(theme);
+        }
       });
   }
 
   return (
-    <div className="themeInputs" onChange={(e) => changeTheme(e.target.value)}>
-      <label htmlFor="light">Light </label>
-      <input
-        type="radio"
-        name="theme"
-        value="light"
-        defaultChecked={theme === "light"}
-      />
-      <label htmlFor="dark">Dark </label>
-      <input
-        type="radio"
-        name="theme"
-        value="dark"
-        defaultChecked={theme === "dark"}
-      />
+    <div
+      className="themeInputs"
+      onChange={(e) => changeTheme(e.target.checked)}
+    >
+      <label htmlFor="dark">Dark Theme! </label>
+      <input type="checkbox" name="dark" defaultChecked={darkTrue} />
     </div>
   );
 }
