@@ -27,10 +27,9 @@ function Inputs(props) {
   }
 
   async function onSubmit(date, type, title, text, e) {
-    if (e) {
-      e.preventDefault();
-    }
-    console.log("yeety");
+    if (e) e.preventDefault();
+
+    console.log("yeeting");
     console.log(date, type, title, text);
     let position = await getPosition(); // wait for getPosition to complete
     let lat = position ? position.coords.latitude : null;
