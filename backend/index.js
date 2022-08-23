@@ -37,7 +37,7 @@ app.post("/setConn", (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      config.conn = tempConn
+      config.conn = tempConn;
       util.writeJSON("config.json", config);
       res.send(rows[0].user);
     }
@@ -54,7 +54,7 @@ app.post("/setDefaultEntryType", (req, res) => {
   config.defaultEntryType = req.body.defaultEntryType;
   util.writeJSON("config.json", config);
   res.send("yeeted");
-})
+});
 
 app.get("/getEntries", (req, res) => {
   let type = req.query.type;
@@ -63,8 +63,8 @@ app.get("/getEntries", (req, res) => {
   let entryID = req.query.entryID;
   let date = req.query.date;
   let limit = req.query.limit;
-  let where = "";
 
+  // function to assist in where clause building
   function build_cond(bite, column) {
     if (!bite) return "";
     return bite.charAt(0) === "!"
@@ -72,23 +72,30 @@ app.get("/getEntries", (req, res) => {
       : `${column} LIKE '%${bite}%' AND `;
   }
 
-  // build where clause
-  if (type || title || words || entryID || date) {
+  let where = "";
+  if (entryID) {
+    where = "WHERE entryID = " + entryID + " ";
+  } else if (type || title || words || date) {
     where += "WHERE ";
     where += build_cond(type, "type");
     where += build_cond(title, "title");
     where += build_cond(words, "text");
-    where += build_cond(entryID, "entryID");
     where += build_cond(date, "CAST(date AS char)");
-
     where = where.slice(0, -4);
   }
+
+  limit =
+    limit === ""
+      ? "" // search of "limit:" has no limit
+      : limit === undefined
+      ? "LIMIT 15" // search with no limit defaults to 15
+      : "LIMIT " + limit;
 
   let sql = `
   SELECT entryID, title, type, DATE_FORMAT(date, '%m-%d-%Y') AS date, date as original_date, text FROM entries 
     ${where}
   ORDER BY original_date DESC, timestamp DESC
-  LIMIT ${limit ? limit : limit === "" ? "18446744073709551615" : "15"};`;
+  ${limit};`;
   console.log(sql);
 
   conn.query(sql, function (err, rows) {
