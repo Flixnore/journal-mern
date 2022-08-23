@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getSettings } from "../../util";
 
 import "./Inputs.css";
@@ -8,10 +8,14 @@ function Inputs(props) {
 
   const [date, setDate] = useState(today);
   const [type, setType] = useState("");
+  const [loadedType, setLoadedType] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  getSettings().then((data) => setType(data.defaultEntryType));
+  useEffect(() => {
+    getSettings().then((data) => setType(data.defaultEntryType));
+    setLoadedType(true);
+  }, [loadedType]);
 
   function handleTextChange(e) {
     setText(e.target.value);
