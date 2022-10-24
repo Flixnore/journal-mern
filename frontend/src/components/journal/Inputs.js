@@ -19,10 +19,13 @@ function Inputs(props) {
 
   function handleTextChange(e) {
     setText(e.target.value);
+  }
+  useEffect(() => {
+    // this hook will get called everytime when myArr has changed
     if (text.includes("::SWFPLQZM")) {
       onSubmit(date, type, title, text);
     }
-  }
+  }, [text]);
 
   function getPosition() {
     return new Promise((res, rej) => {
@@ -35,9 +38,11 @@ function Inputs(props) {
 
     console.log("yeeting");
     console.log(date, type, title, text);
+    /*
     let position = await getPosition(); // wait for getPosition to complete
     let lat = position ? position.coords.latitude : null;
     let long = position ? position.coords.longitude : null;
+    */
 
     fetch("/journalPost", {
       method: "POST",
@@ -47,8 +52,6 @@ function Inputs(props) {
         type: type,
         title: title,
         text: text,
-        lat: lat,
-        long: long,
       }),
     })
       .then((response) => {
@@ -72,9 +75,7 @@ function Inputs(props) {
             type="date"
             id="date"
             defaultValue={today}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
+            onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <br />
@@ -84,9 +85,7 @@ function Inputs(props) {
             type="text"
             id="type"
             value={type}
-            onChange={(e) => {
-              setType(e.target.value);
-            }}
+            onChange={(e) => setType(e.target.value)}
           />
         </div>
         <br />
@@ -95,9 +94,7 @@ function Inputs(props) {
           <input
             type="text"
             id="title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <br />
@@ -106,7 +103,7 @@ function Inputs(props) {
             rows="40"
             cols="130"
             id="text"
-            onChange={(e) => handleTextChange(e)}
+            onChange={(e) => setText(e.target.value)}
           />
         </div>
         <br />
