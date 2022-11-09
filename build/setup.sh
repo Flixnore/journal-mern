@@ -7,6 +7,3 @@ sudo apt install mysql-server
 
 cd ../frontend && npm install
 cd ../backend && npm install
-
-sudo mysql -u root < db.sql
-sudo mysql -u root < users.sql
