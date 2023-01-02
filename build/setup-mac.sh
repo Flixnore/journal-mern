@@ -6,3 +6,7 @@
 brew update
 brew install node
 brew install mysql
+sudo services mysql start
+
+cd ../frontend && npm install
+cd ../backend && npm install
