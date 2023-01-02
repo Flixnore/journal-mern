@@ -41,19 +41,18 @@ function Entries() {
       })
       .then((data) => {
         data = data[0]; // using entryID deterministically yields one result
-        console.log(data)
+        console.log(data);
         // Correctly render line breaks
         data.text = data.text.replace(/\n{2}|\r{2}/g, "&nbsp;</p><p>");
         data.text = data.text.replace(/\r\n|\n|\r/g, "&nbsp;<br />");
         data.text = "<p>" + data.text + "</p>";
-        for (let search of searchInput.split(" ")) {
-          if (!search.includes(":")) {
-            console.log(search);
-            data.text = data.text.replace(
-              search,
-              "<span style='background-color:yellow;'>" + search + "</span>"
-            );
-          }
+        if (searchInput != ""){
+          console.log(searchInput);
+          const re = new RegExp(searchInput, "gi");
+          data.text = data.text.replace(
+            re,
+            "<span style='background-color:yellow;'>" + searchInput + "</span>"
+          );
         }
         setCurrentEntryData(data);
       });
