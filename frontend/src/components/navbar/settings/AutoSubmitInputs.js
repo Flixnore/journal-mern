@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { getSettings } from "../../../util";
 
-function DefaultEntryTypeInputs() {
+function AutoSubmitInputs() {
   const [loading, setLoading] = useState(true);
-  const [defaultEntryType, setDefaultEntryType] = useState("");
+  const [autoSubmit, setAutoSubmit] = useState("");
 
   useEffect(() => {
     getSettings().then((data) => {
-      setDefaultEntryType(data.defaultEntryType);
+      setAutoSubmit(data.autoSubmit);
       setLoading(false);
     });
   }, [loading]);
@@ -19,11 +19,11 @@ function DefaultEntryTypeInputs() {
       return;
     }
 
-    fetch("/setDefaultEntryType", {
+    fetch("/setAutoSubmit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        defaultEntryType: defaultEntryType,
+        autoSubmit: autoSubmit,
       }),
     })
       .then((response) => {
@@ -31,24 +31,24 @@ function DefaultEntryTypeInputs() {
       })
       .then((text) => {
         if (text !== "yeeted") {
-          console.log("Couldn't change default entry type");
+          console.log("Couldn't change auto submit");
         } else {
-          console.log("Changed default entry type to " + defaultEntryType);
+          console.log("Changed auto submit to " + autoSubmit);
         }
       });
-  }, [defaultEntryType]);
+  }, [autoSubmit]);
 
   return (
-    <div className="defaultEntryTypeInputs">
-      <label>Default Entry Type</label>
+    <div className="autoSubmitInputs">
+      <label>Auto Submit Text</label>
       <br />
       <input
         type="text"
-        defaultValue={defaultEntryType}
-        onChange={(e) => setDefaultEntryType(e.target.value)}
+        defaultValue={autoSubmit}
+        onChange={(e) => setAutoSubmit(e.target.value)}
       />
     </div>
   );
 }
 
-export default DefaultEntryTypeInputs;
+export default AutoSubmitInputs;

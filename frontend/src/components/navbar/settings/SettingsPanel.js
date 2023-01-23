@@ -1,6 +1,7 @@
 import ThemeInputs from "./ThemeInputs";
 import ConnectionInputs from "./ConnectionInputs";
 import DefaultEntryTypeInputs from "./DefaultEntryTypeInputs";
+import AutoSubmitInputs from "./AutoSubmitInputs";
 import "./SettingsPanel.css";
 
 function SettingsPanel() {
@@ -11,6 +12,8 @@ function SettingsPanel() {
       <ConnectionInputs />
       <br />
       <DefaultEntryTypeInputs />
+      <br />
+      <AutoSubmitInputs />
     </div>
   );
 }

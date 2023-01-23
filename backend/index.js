@@ -56,6 +56,12 @@ app.post("/setDefaultEntryType", (req, res) => {
   res.send("yeeted");
 });
 
+app.post("/setAutoSubmit", (req, res) => {
+  config.autoSubmit = req.body.autoSubmit;
+  util.writeJSON("config.json", config);
+  res.send("yeeted");
+});
+
 app.get("/getEntries", (req, res) => {
   let type = req.query.type;
   let title = req.query.title;

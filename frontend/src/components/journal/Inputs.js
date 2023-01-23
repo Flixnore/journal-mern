@@ -8,12 +8,16 @@ function Inputs(props) {
 
   const [date, setDate] = useState(today);
   const [type, setType] = useState("");
+  const [autoSubmit, setAutoSubmit] = useState("");
   const [loadedType, setLoadedType] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
   useEffect(() => {
-    getSettings().then((data) => setType(data.defaultEntryType));
+    getSettings().then((data) => {
+      setType(data.defaultEntryType);
+      setAutoSubmit(data.autoSubmit);
+    });
     setLoadedType(true);
   }, [loadedType]);
 
@@ -22,7 +26,7 @@ function Inputs(props) {
   }
   useEffect(() => {
     // this hook will get called everytime when myArr has changed
-    if (text.includes("::SWFPLQZM")) {
+    if (text.includes(autoSubmit) && autoSubmit != "") {
       onSubmit(date, type, title, text);
     }
   }, [text]);
