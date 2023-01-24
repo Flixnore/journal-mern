@@ -78,6 +78,9 @@ function Entries() {
           title={currentEntryData.title}
           date={currentEntryData.date}
           text={currentEntryData.text}
+          entryID={entryID}
+          maxEntryID={Math.max(...previewsData.map(e => e.entryID))}
+          setEntry={setEntryID}
         />
       </div>
     </div>
