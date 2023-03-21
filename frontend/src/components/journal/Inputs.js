@@ -11,7 +11,7 @@ function Inputs(props) {
   const [autoSubmit, setAutoSubmit] = useState("");
   const [loadedType, setLoadedType] = useState(false);
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [text, setText] = useState(localStorage.getItem("text") || "");
 
   useEffect(() => {
     getSettings().then((data) => {
@@ -24,8 +24,9 @@ function Inputs(props) {
   function handleTextChange(e) {
     setText(e.target.value);
   }
+
   useEffect(() => {
-    // this hook will get called everytime when myArr has changed
+    localStorage.setItem("text", text);
     if (text.includes(autoSubmit) && autoSubmit != "") {
       onSubmit(date, type, title, text);
     }
@@ -61,11 +62,12 @@ function Inputs(props) {
       .then((response) => {
         return response.text();
       })
-      .then((text) => {
+      .then((response) => {
         // TODO: error checking
-        console.log(text);
-        if (text === "yeeted") {
-          document.getElementById("inputs").reset();
+        console.log(response);
+        if (response === "yeeted") {
+          localStorage.clear()
+          setText("")
         }
       });
   }
@@ -107,6 +109,7 @@ function Inputs(props) {
             rows="40"
             cols="130"
             id="text"
+            value={text}
             onChange={(e) => setText(e.target.value)}
           />
         </div>
