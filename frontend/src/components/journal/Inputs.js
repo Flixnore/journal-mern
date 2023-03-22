@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { getSettings } from "../../util";
+import moment from 'moment';
 
 import "./Inputs.css";
 
 function Inputs(props) {
-  let today = new Date().toISOString().split("T")[0];
-
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState(moment().format('YYYY-MM-DD'));
   const [type, setType] = useState("");
   const [autoSubmit, setAutoSubmit] = useState("");
   const [loadedType, setLoadedType] = useState(false);
@@ -80,7 +79,7 @@ function Inputs(props) {
           <input
             type="date"
             id="date"
-            defaultValue={today}
+            defaultValue={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
