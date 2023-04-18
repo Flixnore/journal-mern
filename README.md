@@ -12,6 +12,12 @@ sudo mysql -u root < db.sql
 sudo mysql -u root < users.sql
 ```
 
+Run the backend and frontend concurrently:
+```
+cd backend/
+npm run start
+```
+
 ## FAQs
 
 ### Why write a journal app?
